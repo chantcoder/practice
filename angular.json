@@ -23,9 +23,33 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/admin-lte/plugins/fontawesome-free/css/all.css",
+              "./node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css",
+              "./node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css",
+              "./node_modules/admin-lte/plugins/jqvmap/jqvmap.min.css",
+              "./node_modules/admin-lte/dist/css/adminlte.css",
+              "./node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
+              "./node_modules/admin-lte/plugins/daterangepicker/daterangepicker.css",
+              "./node_modules/admin-lte/plugins/summernote/summernote-bs4.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "./node_modules/jquery/dist/jquery.min.js", 
+              "./node_modules/chart.js/dist/Chart.bundle.js",
+              "./node_modules/sparklines/source/sparkline.js",
+              "./node_modules/jqvmap-novulnerability/dist/jquery.vmap.js",
+              "./node_modules/jquery-knob-chif/js/jquery.knob.js",
+              "./node_modules/moment/dist/moment.js",
+              "./node_modules/daterangepicker/daterangepicker.js",
+              "./node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.js",
+              "./node_modules/summernote/dist/summernote-bs4.js",
+              "./node_modules/overlayscrollbars/js/jquery.overlayScrollbars.js",
+              "./node_modules/admin-lte/dist/js/adminlte.min.js",
+              "./node_modules/admin-lte/dist/js/demo.js",
+              "./node_modules/admin-lte/dist/js/pages/dashboard.js"
+            ]
           },
           "configurations": {
             "production": {
