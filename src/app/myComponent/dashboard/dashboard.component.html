@@ -1,1 +1,172 @@
-<p>dashboard works!</p>
+<div class="container-fluid p-3 ">
+   <div class="card" style="background-color:light-blue ;">
+    <div class="card-header h2">Department Creation</div>
+    <form [formGroup]="departmentCreationForm">
+        <div class="card-body">
+            <!-- fieldset 1 -->
+                <fieldset class="border p-2">
+                <legend class="float-none w-auto p-2">Department Details</legend>
+                        <!-- row 1 -->
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="departmentName">Department Name</label>
+                                    <input type="text" placeholder="enter department name" class="form-control" formControlName="departmentName">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="adminDepartment">Administrative Department</label>
+                                    <input type="text" class="form-control" [readonly]="isTrue" formControlName="adminDepartment">
+                                </div>
+                            </div>
+                        </div>
+                    <!-- row 2 -->
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="designationOfHod">Designation of HOD</label>
+                                    <select formControlName="designationOfHod" class="form-select">
+                                        <option value="" selected>select designation</option>
+                                        <option *ngFor="let designation of designation" value="{{designation}}">{{designation}}</option>
+                                    </select>
+                                    <!-- <input type="text" placeholder="enter designation of hod" class="form-control" formControlName="designationOfHod" > -->
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="divisionType">Division Type</label>
+                                    <select class="form-select" formArrayName="divisionType">
+                                        <option value="" selected>select bfc division name</option>
+                                        <option *ngFor="let bfcDivName of bfcDivName" value="{{bfcDivName}}">{{bfcDivName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                </fieldset>
+                <br>
+           
+            <!-- fieldset 2 -->
+                <fieldset class="border p-2 mb-2" *ngIf="showMe">
+                    <legend class="float-none w-auto p-2">BCO Details</legend>
+                    <!-- row 1 -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                                <!-- <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="bcoStatus" id="bcoStatus1" value="Existing BCO">
+                                <label class="form-check-label" for="inlineRadio1">Existing BCO</label>
+                              </div> -->
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="bcoStatus" id="bcoStatus" formControlName="bcoStatus" (click)="activateNewBco()">
+                                <label class="form-check-label" for="bcoStatus">New BCO</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- row 2 -->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="bcoName">BCO Name</label>
+                                <input type="text"  placeholder="enter bco name" class="form-control" formControlName="bcoName" [readonly]="isActive">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="budgetHead"> Major Head</label>
+                                <select class="form-select">
+                                    <option value="" selected>select major head</option>
+                                    <option *ngFor="let majorHead of majorHead" value="{{majorHead}}">{{majorHead}}</option>
+                                </select>
+
+                                <input type="text" placeholder="enter budget head" class="form-control" 
+                                formControlName="budgetHead" [readonly]="isActive" maxlength="4" (keypress)="this.global.numberOnly($event)"
+                                 (ngModelChange)="getSubMajorHead($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group" *ngIf="isSubMajAvail">
+                                <label for="bcoName">Sub Major Head</label>
+                                <input type="text" placeholder="enter bco name" class="form-control" formControlName="bcoName" maxlength="2"
+                                (keypress)="this.global.numberOnly($event)"
+                                (ngModelChange)="getMinorHead($event)">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group" *ngIf="isMinorHead">
+                                <label for="budgetHead"> Budget Head</label>
+                                <input type="text" placeholder="enter budget head" class="form-control" 
+                                formControlName="budgetHead">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                 <!-- fieldset 3 -->
+                 <div class="row">
+                    <div class="col-lg-2">Create Additional Request</div>
+                    <div class="col-lg-3">
+                        <div class="dropdown rounded-0">
+                            <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <span class="bi bi-plus-lg p-1 text-white"></span>
+                            </button>
+                            <ul class="dropdown-menu rounded-0">
+                                <!-- <li><a class="dropdown-item" href="#">Post Creation</a></li> -->
+                                <li><a class="dropdown-item" (click)="showDetails()" id="bcoCreation">BCO Creation</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- fieldset 4 -->
+                <fieldset class="border p-2">
+                    <legend class="float-none w-auto p-2">Documents</legend>
+                        <!-- row 1 -->
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="descriptions">Descriptions</label>
+                                    <input type="text" placeholder="enter descriptions" class="form-control" formControlName="docDescription" >
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="adminDepartment">Upload Document</label>
+                                    <input type="file"  class="form-control" formControlName="uploadDocument" >
+                                </div>
+                            </div>
+                        </div>
+                    <!-- row 2 -->
+                        <div class="row">
+                            <div class="col-lg-4">
+                                table here
+                            </div>
+                            <div class="col-lg-4"></div>
+                        </div>
+                </fieldset>
+
+                <fieldset class="border p-2">
+                    <legend class="float-none w-auto p-2">Remarks/Comments</legend>
+                        <!-- row 1 -->
+                        <div class="row">
+                            <div class="col-lg-2">Remarks</div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <textarea class="form-control"  rows="3" placeholder="enter remarks here" formControlName="remarks"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                </fieldset>
+
+
+        </div>
+        <div class="card-footer text-center p-2">
+            <button class="btn btn-primary m-3" type="button">Save</button>
+            <button class="btn btn-primary m-3" type="submit">Submit</button>
+            <button class="btn btn-success m-3" type="reset">Back</button>
+            <button class="btn btn-danger m-3" type="button">Close</button>
+        </div>
+    </form>
+   </div>
+</div>
